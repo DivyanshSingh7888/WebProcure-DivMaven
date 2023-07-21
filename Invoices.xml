@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Solicitation">
+    <test verbose="2" preserve-order="true" name="D:/Div.files/D.files/DivMaven">
+        <classes>
+            <class name="Selenium.Invoices.ViewInvoice"/>
+            <class name="Selenium.Invoices.CreateInvoice"/>
+            <class name="Selenium.Invoices.CreatePaymentVoucher"/>
+<!--            <class name="Selenium.Invoices.InvoiceImport"/>-->
+        </classes>
+    </test>
+</suite>

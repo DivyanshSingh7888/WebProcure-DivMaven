@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Solicitation">
+<!--    <test verbose="2" preserve-order="true" name="D:/Div.files/D.files/DivMaven">-->
+<!--        <classes>-->
+<!--            <class name="Selenium.Login.LogInLogOut"/>-->
+<!--        </classes>-->
+<!--    </test>-->
+
+    <groups>
+        <run>
+            <include name = "Selenium.Login.LogInLogOut"></include>
+        </run>
+    </groups>
+
+</suite>
