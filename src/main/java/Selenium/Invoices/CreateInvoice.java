@@ -5,10 +5,7 @@ import UtilMethods.DriverUtil;
 import com.relevantcodes.extentreports.ExtentReports;
 import com.relevantcodes.extentreports.ExtentTest;
 import com.relevantcodes.extentreports.LogStatus;
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.testng.annotations.*;
 
 import java.io.FileNotFoundException;
@@ -34,15 +31,15 @@ public class CreateInvoice {
         test.log(LogStatus.PASS, ">>>Started>>>>");
     }
 
-    @Test
-    public void createInvoice() throws IOException, InterruptedException {
-        createInvoice(this.test, this.driver);
-    }
-
     @BeforeMethod
     public void setUp() throws FileNotFoundException, InterruptedException {
         driver = DriverUtil.getDriver();
         test.log(LogStatus.PASS, "Logged In");
+    }
+
+    @Test
+    public void createInvoice() throws IOException, InterruptedException {
+        createInvoice(test, this.driver);
     }
 
     public static void createInvoice(ExtentTest test, WebDriver driver) throws InterruptedException, IOException
@@ -62,8 +59,9 @@ public class CreateInvoice {
             supplier.sendKeys("**");
 
             test.log(LogStatus.PASS, "Supplier Selected- IBC");
-            Thread.sleep(2000);
-            WebElement supplierIBC = driver.findElement(By.xpath("//div[@id='ui-id-3']"));
+            Thread.sleep(1000);
+            WebElement supplierIBC = driver.findElement(By.xpath("/html/body/ul/li[1]/div"));
+            Thread.sleep(1000);
             supplierIBC.click();
 
             test.log(LogStatus.PASS, "Entering Random Supplier Invoice Number");
@@ -119,9 +117,9 @@ public class CreateInvoice {
             driver.switchTo().parentFrame();
 
             test.log(LogStatus.PASS, "Invoice Quantity Added");
-            JavascriptExecutor jse = (JavascriptExecutor) driver;
-            jse.executeScript("document.getElementById('invoiceQty_1199_1').setAttribute('value', '20')");
-            jse.executeScript("document.getElementById('invoiceUnitPrice_1199_1').setAttribute('value', '33')");
+            WebElement invoiceQuantity =driver.findElement(By.xpath("/html/body/section[4]/form/div[1]/div[2]/div/table/tbody/tr[1]/td[2]/input"));
+            invoiceQuantity.sendKeys(Keys.BACK_SPACE);
+            invoiceQuantity.sendKeys("23");
 
             test.log(LogStatus.PASS, "Clicking on Line Details");
             WebElement lineDetails = driver.findElement(By.xpath("//*[text()='Line Details']"));
@@ -146,9 +144,10 @@ public class CreateInvoice {
 
             try {
                 test.log(LogStatus.PASS, "Clicking on Pop-Up");
-                WebElement popUp = driver.findElement(By.xpath("//button[text()='Yes']"));
-                popUp.click();
-            } catch (Exception e) {
+//                WebElement popUp = driver.findElement(By.xpath("//button[text()='Yes']"));
+//               popUp.click();
+            } catch (Exception e)
+            {
                 System.out.println("PopUp is not there");
                 throw new RuntimeException(e);
             }
@@ -178,7 +177,8 @@ public class CreateInvoice {
     }
 
     @AfterMethod
-    public void tearDown() {
+    public void tearDown()
+    {
         //driver.quit();
     }
 

@@ -38,7 +38,7 @@ public class createRequests {
 
     @Test
     public void createRequest() throws IOException, InterruptedException {
-        createRequest(this.test, this.driver);
+        createRequest(test, this.driver);
     }
 
     @Test
@@ -101,7 +101,7 @@ public class createRequests {
             WebElement retainKeyInfo = driver.findElement(By.xpath("//input[@id='chk-retain-top']"));
             retainKeyInfo.isEnabled();
         } catch (Exception e) {
-            System.out.println("Alraedy disabled");
+            System.out.println("Already disabled");
             throw new RuntimeException(e);
         }
 

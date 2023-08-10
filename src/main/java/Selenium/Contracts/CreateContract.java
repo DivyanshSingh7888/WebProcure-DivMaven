@@ -2,6 +2,7 @@ package Selenium.Contracts;
 
 import UtilMethods.CurrentDateTimeAndRandomNumber;
 import UtilMethods.DriverUtil;
+import UtilMethods.SwitchingWindows;
 import com.relevantcodes.extentreports.ExtentReports;
 import com.relevantcodes.extentreports.ExtentTest;
 import com.relevantcodes.extentreports.LogStatus;
@@ -16,6 +17,7 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
+import java.util.Set;
 
 import static ExtentRepoetListners.ExtentReportListener.report;
 import static UtilMethods.getScreenShot.capture;
@@ -45,10 +47,9 @@ public class CreateContract {
     @Test
     public void createContract() throws IOException, InterruptedException
     {
-        createContract(this.test, this.driver);
+        createContract(test, this.driver);
     }
 
-    @Test
     public static void createContract(ExtentTest test, WebDriver driver) throws InterruptedException, IOException
     {try
     {
@@ -80,7 +81,7 @@ public class CreateContract {
 
         test.log(LogStatus.PASS, "Entering Title of Contract");
         WebElement title = driver.findElement(By.xpath("//input[@id='title']"));
-        title.sendKeys("Test");
+        title.sendKeys("Automation");
 
         test.log(LogStatus.PASS, "Selecting Commodities");
         WebElement commodities = driver.findElement(By.xpath("//button[@id='selectCatButton']"));
@@ -121,7 +122,7 @@ public class CreateContract {
         searchButton.click();
 
         test.log(LogStatus.PASS, "Selecting Action Check Box");
-        WebElement actionCheckBox = driver.findElement(By.xpath("//*[@id=\"cont-search\"]/table/tbody/tr[2]/td[4]/a/img"));
+        WebElement actionCheckBox = driver.findElement(By.xpath("(//img[@title='Check Mark Selected'])[2]"));
         actionCheckBox.click();
         test.log(LogStatus.PASS, "Coming to the Parent Window");
         driver.switchTo().window("");
@@ -190,6 +191,26 @@ public class CreateContract {
         WebElement nextStep4 = driver.findElement(By.xpath("//button[normalize-space()='Next']"));
         nextStep4.click();
 
+        test.log(LogStatus.PASS, "Clicking on Add Document Library");
+        WebElement addDocumentFromLibrary = driver.findElement(By.xpath("(//button[normalize-space()='Add Documents From Library'])[1]"));
+        addDocumentFromLibrary.click();
+
+        SwitchingWindows.switchCurrentwindow(driver);
+
+        test.log(LogStatus.PASS, "Selecting Document");
+        WebElement docCheckBox = driver.findElement(By.xpath("(//input[@type='checkbox'])[1]"));
+        docCheckBox.click();
+
+        test.log(LogStatus.PASS, "Scrolling page");
+        Thread.sleep(1000);
+        JavascriptExecutor js4 = (JavascriptExecutor) driver;
+        js4.executeScript("window.scrollBy(0,400)", "");
+
+        test.log(LogStatus.PASS, "Selecting Document");
+        WebElement saveButton = driver.findElement(By.xpath("(//button[normalize-space()='Save'])[1]"));
+        saveButton.click();
+
+        Thread.sleep(1000);
         test.log(LogStatus.PASS, "Clicking on Next Step- Attachments");
         WebElement nextStep5 = driver.findElement(By.xpath("//button[normalize-space()='Next']"));
         nextStep5.click();
@@ -220,7 +241,8 @@ public class CreateContract {
         String ActualUrl = driver.getCurrentUrl();
         String ExpectedUrl = ("https://webprocure-stage.proactiscloud.com/ContractManagement/city/perfect?action=main");
 
-        if (Objects.equals(ActualUrl, ExpectedUrl)){
+        if (Objects.equals(ActualUrl, ExpectedUrl))
+        {
             System.out.println(",,,,,,,,,,,,,,,,,,Test is Passed,,,,,,,,,,,,,,,,,");
             test.log(LogStatus.PASS, "Contract Created>>>");
             test.log(LogStatus.PASS,test.addScreenCapture(capture(driver))+ "Test Passed");

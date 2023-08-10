@@ -7,9 +7,11 @@ import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.concurrent.ThreadLocalRandom;
 
-public class CurrentDateTimeAndRandomNumber {
+public class CurrentDateTimeAndRandomNumber
+{
     @NotNull
-    public static String getCurrentTime(){
+    public static String getCurrentTime()
+    {
         //Est-Time Zone
         ZoneId newYokZoneId = ZoneId.of("America/New_York");
         LocalDateTime localDateTime = LocalDateTime.now(newYokZoneId);
@@ -30,14 +32,16 @@ public class CurrentDateTimeAndRandomNumber {
     }
 
     @NotNull
-    public static String getCurruentDate(){
+    public static String getCurruentDate()
+    {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM/dd/yyyy");
         LocalDateTime now = LocalDateTime.now();
         return dtf.format(now);
     }
 
     @NotNull
-    public static String addedMonths() {
+    public static String addedMonths()
+    {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM/dd/yyyy");
         LocalDateTime now = LocalDateTime.now();
         LocalDateTime addedMonths = now.plusMonths(1);
@@ -46,8 +50,21 @@ public class CurrentDateTimeAndRandomNumber {
     }
 
     @NotNull
-    public static String getRandomNumber(){
+    public static String getRandomNumber()
+    {
         String s = "Document Number" + ThreadLocalRandom.current().nextInt(1000);
+        return s;
+    }
+
+    static String s;
+    @NotNull
+    public static String getRandomNumber10Digit()
+    {
+        s = "Document Number" + ThreadLocalRandom.current().nextInt(100000000);
+        return s;
+    }
+    public static String copygetRandomNumber10Digit()
+    {
         return s;
     }
 }

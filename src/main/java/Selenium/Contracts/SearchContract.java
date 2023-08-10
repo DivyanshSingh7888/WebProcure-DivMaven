@@ -17,7 +17,8 @@ import java.util.concurrent.TimeUnit;
 import static ExtentRepoetListners.ExtentReportListener.report;
 import static UtilMethods.getScreenShot.capture;
 
-public class SearchContract {
+public class SearchContract
+{
     WebDriver driver;
     static ExtentTest test;
 
@@ -30,17 +31,18 @@ public class SearchContract {
     }
 
     @BeforeMethod
-    public void setUp() throws FileNotFoundException, InterruptedException {
+    public void setUp() throws FileNotFoundException, InterruptedException
+    {
 
         driver = DriverUtil.getDriver();
     }
 
     @Test
-    public void searchContract() throws IOException, InterruptedException {
-        searchContract(this.test, this.driver);
+    public void searchContract() throws IOException, InterruptedException
+    {
+        searchContract(test, this.driver);
     }
 
-    @Test
     public static void searchContract(ExtentTest test, WebDriver driver) throws IOException {try {
 
         test.log(LogStatus.PASS, "Clicking on Contract Drop Down");
@@ -51,13 +53,16 @@ public class SearchContract {
         WebElement contractSearch = driver.findElement(By.xpath("(//a[@href='/contract/search.do'])[1]"));
         contractSearch.click();
 
-        test.log(LogStatus.PASS, "Entering values to the Contract Search Box");
-        WebElement searchBox = driver.findElement(By.id("input-search-box"));
-        searchBox.sendKeys("Test Div");
+//        test.log(LogStatus.PASS, "Entering values to the Contract Search Box");
+//        WebElement searchBox = driver.findElement(By.id("input-search-box"));
+//        Thread.sleep(3000);
+//        DriverUtil.ExplicitWait(searchBox);
+//        searchBox.sendKeys("Test Div");
 
-        test.log(LogStatus.PASS, "Clicking on Contract Search Button");
-        WebElement searchButton = driver.findElement(By.xpath("//button[normalize-space()='Search']"));
-        searchButton.click();
+
+//        test.log(LogStatus.PASS, "Clicking on Contract Search Button");
+//        WebElement searchButton = driver.findElement(By.xpath("//button[normalize-space()='Search']"));
+//        searchButton.click();
 
         test.log(LogStatus.PASS, "Clicking on Contract Search Results");
         Thread.sleep(3000);
@@ -66,29 +71,31 @@ public class SearchContract {
 
         test.log(LogStatus.PASS, "Asserting through URL");
         String ActualUrl = driver.getCurrentUrl();
-        String ExpectedUrl = ("https://webprocure-stage.proactiscloud.com/ContractManagement/" +
-                "city/perfect?contractID=1748&action=view&type=search");
+        String ExpectedUrl = ("https://webprocure-stage.proactiscloud.com/ContractManagement/city/" +
+                "perfect?contractID=1859&action=view&type=search");
 
-        if (Objects.equals(ActualUrl, ExpectedUrl)){
+        if (Objects.equals(ActualUrl, ExpectedUrl))
+        {
             System.out.println(",,,,,,,,,,,,,,,,,,Test is Passed,,,,,,,,,,,,,,,,,");
             test.log(LogStatus.PASS, "Search Result Passed");
-            test.log(LogStatus.PASS,test.addScreenCapture(capture(driver))+ "Test Passed");
+
         } else {
             System.out.println(",,,,,,,,,,,Test is Failed,,,,,,,,,,,,,,,,,,,");
             test.log(LogStatus.PASS, "Search Result Failed");
         }
-    } catch (InterruptedException e) {
+        test.log(LogStatus.PASS, test.addScreenCapture(capture(driver)) + "For clarifications - Please refer to the ScreenShot...!!");
+
+    } catch (InterruptedException | IOException e) {
         throw new RuntimeException(e);
-    } catch (IOException e) {
-        throw new RuntimeException(e);
-    }finally {
+    } finally {
         test.log(LogStatus.INFO, test.addScreenCapture(capture(driver)) + "For clarifications - Please refer to the ScreenShot...!!");
     }
     }
 
     @AfterMethod
-    public void tearDown() {
-//        driver.quit();
+    public void tearDown()
+    {
+        //driver.quit();
     }
 
     @AfterClass

@@ -1,7 +1,6 @@
 package UtilMethods;
 
 import org.openqa.selenium.WebDriver;
-
 import java.util.Set;
 
 public class SwitchingWindows

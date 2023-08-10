@@ -41,10 +41,9 @@ public class GiveResponseToSolicitation {
 
     @Test
     public void givingResponseToSolicitation() throws IOException, InterruptedException {
-        givingResponseToSolicitation(this.test, this.driver);
+        givingResponseToSolicitation(test, this.driver);
     }
 
-    @Test
     public static <StaleElementException extends Throwable> void givingResponseToSolicitation(ExtentTest test, WebDriver driver) throws InterruptedException, IOException {try {
 
         test.log(LogStatus.PASS, "Clicking on Drop-Down");
@@ -78,7 +77,7 @@ public class GiveResponseToSolicitation {
 //        test.log(LogStatus.PASS, "Searching Solicitation through Sol-Number");
 //        WebElement filter_bidNumber = driver.findElement(By.name("filter_bidNumber"));
 //        filter_bidNumber.sendKeys("10918");
-//
+
 //        test.log(LogStatus.PASS, "Clicking on Submit Button");
 //        WebElement submit_Button = driver.findElement(By.xpath("(//button[normalize-space()='Submit'])[1]"));
 //        submit_Button.click();
@@ -153,12 +152,10 @@ public class GiveResponseToSolicitation {
         WebElement close_Button = driver.findElement(By.xpath("(//button[@onclick='javascript:Done();'])[1]"));
         close_Button.click();
 
-    } catch (InterruptedException
+    } catch (InterruptedException | IOException
             e) {
         throw new RuntimeException(e);
-    } catch (IOException e) {
-        throw new RuntimeException(e);
-    }finally {
+    } finally {
         test.log(LogStatus.INFO, test.addScreenCapture(capture(driver)) + "For clarifications - Please refer to the ScreenShot...!!");
     }}
 

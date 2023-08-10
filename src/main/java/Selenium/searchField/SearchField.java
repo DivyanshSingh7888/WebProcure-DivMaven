@@ -38,7 +38,12 @@ public class SearchField {
     }
 
     @Test
-    public void searchField() throws InterruptedException, IOException {
+    public void searchField() throws IOException, InterruptedException {
+        searchField(test, this.driver);
+    }
+
+    public void searchField(ExtentTest test, WebDriver driver) throws InterruptedException, IOException
+    {
         try {
 
             test.log(LogStatus.PASS, "Clicking and Searching result");

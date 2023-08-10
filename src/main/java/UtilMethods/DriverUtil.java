@@ -2,19 +2,12 @@ package UtilMethods;
 
 import com.paulhammant.ngwebdriver.ByAngular;
 import com.paulhammant.ngwebdriver.NgWebDriver;
-import org.apache.commons.io.FileUtils;
+import org.jetbrains.annotations.NotNull;
 import org.openqa.selenium.*;
-import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.chrome.ChromeDriver;
-
-import org.apache.log4j.xml.DOMConfigurator;
-import org.openqa.selenium.chrome.ChromeDriverService;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.*;
-
-import java.io.File;
-import java.io.IOException;
-import java.security.Provider;
+import org.openqa.selenium.chrome.ChromeOptions;
 import java.time.Duration;
 import java.util.concurrent.TimeUnit;
 
@@ -23,12 +16,15 @@ public class DriverUtil {
     public static WebDriver driver;
 
     @BeforeMethod
-    public static synchronized <ChromeOptions> WebDriver getDriver(){
+    public static synchronized <ChromeOptions> WebDriver getDriver() {
 
-        if(driver != null) return driver;
+        if (driver != null) return driver;
         driver = new ChromeDriver();
 
-        //Configurations for Headless Execution
+//        ChromeOptions options = new ChromeOptions();
+//        options.addArguments("--incognito");
+
+//        Configurations for Headless Execution
 //        ChromeOptions options = new ChromeOptions();
 //        options.("--headless"); // Enables headless mode
 //        WebDriver driver = new ChromeDriver((ChromeDriverService) options);
@@ -57,11 +53,14 @@ public class DriverUtil {
         return driver;
     }
 
-    @BeforeMethod(description = "Pop-ups are different That is why creating a another getDriver method")
-    public static synchronized <ChromeOptions> WebDriver getVenderDriver() {
+    static ChromeOptions options = new ChromeOptions();
 
+    @BeforeMethod(description = "Pop-ups are different That is why creating a another getDriver method")
+    public static synchronized <ChromeOptions> WebDriver getVendorDriver() {
+
+        options.addArguments("--disable-save-address?-bubble");
         if (driver != null) return driver;
-        driver = new ChromeDriver();
+        driver = new ChromeDriver(options);
 
         driver.manage().timeouts().implicitlyWait(12, TimeUnit.SECONDS);
         System.setProperty("webdriver.chrome.driver", "D:\\Div.files\\D.files\\chromedriver_win32\\chromedriver.exe");
@@ -80,13 +79,12 @@ public class DriverUtil {
         return driver;
     }
 
-    public static void ExplicitWait()
-    {
+    public static void ExplicitWait(WebElement searchBox) {
         Duration timeoutInSeconds = null;
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
     }
 
-    @BeforeMethod(description = "To Handle Ng-Based web elements, Configuring NG-WebDriver")
+    @BeforeMethod(description = "To Handle Angular-Based web elements, Configuring NG-WebDriver")
     public static synchronized <ChromeOptions> WebDriver getNGWebDriver() {
 
         if (driver != null) return driver;
@@ -112,5 +110,58 @@ public class DriverUtil {
         return driver;
     }
 
+    @NotNull
+    @BeforeMethod(description = "Creating login for Vendor Registration")
+    public static synchronized <ChromeOptions> WebDriver logInAsCreatedVendor() {
 
+        if (driver != null) return driver;
+        driver = new ChromeDriver();
+
+        driver.manage().timeouts().implicitlyWait(12, TimeUnit.SECONDS);
+        System.setProperty("webdriver.chrome.driver", "D:\\Div.files\\D.files\\chromedriver_win32\\chromedriver.exe");
+
+        driver.manage().window().maximize();
+        driver.get("https://webprocure-stage.proactiscloud.com/Login");
+
+        WebElement username1 = driver.findElement(By.id("visibleUname"));
+        username1.sendKeys("Bob Ram");
+
+        WebElement pass = driver.findElement(By.id("visiblePass"));
+        pass.sendKeys("Ramesh@123");
+
+        WebElement login = driver.findElement(By.xpath("//button[@id='login-submit']"));
+
+        login.click();
+        return driver;
+    }
+
+    @BeforeMethod
+    public static synchronized <ChromeOptions> WebDriver getContractBidBoardDriver()
+    {
+
+        if (driver != null) return driver;
+        driver = new ChromeDriver();
+
+        driver.manage().timeouts().implicitlyWait(12, TimeUnit.SECONDS);
+        System.setProperty("webdriver.chrome.driver", "D:\\Div.files\\D.files\\chromedriver_win32\\chromedriver.exe");
+        driver.manage().window().maximize();
+
+        driver.get("https://webprocure-stage.proactiscloud.com/wp-web-public/en/#/contractboard/search?customerid=33");
+        return driver;
+    }
+
+    @BeforeMethod
+    public static synchronized <ChromeOptions> WebDriver getBidBoardSolicitaionDriver()
+    {
+
+        if (driver != null) return driver;
+        driver = new ChromeDriver();
+
+        driver.manage().timeouts().implicitlyWait(12, TimeUnit.SECONDS);
+        System.setProperty("webdriver.chrome.driver", "D:\\Div.files\\D.files\\chromedriver_win32\\chromedriver.exe");
+        driver.manage().window().maximize();
+
+        driver.get("https://webprocure-stage.proactiscloud.com/wp-web-public/en/#/bidboard/search?searchterm=Test%20New%20&pagenumber=1&customerid=33&oid=-1&shorBy=r");
+        return driver;
+    }
 }

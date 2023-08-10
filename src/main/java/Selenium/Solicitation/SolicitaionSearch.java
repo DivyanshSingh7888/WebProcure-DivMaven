@@ -40,6 +40,11 @@ public class SolicitaionSearch {
     }
 
     @Test
+    public void solicitationSearch() throws IOException, InterruptedException
+    {
+        solicitationSearch(test, this.driver);
+    }
+
     public static void solicitationSearch(ExtentTest test, WebDriver driver) throws InterruptedException, IOException {
         try {
 
@@ -55,7 +60,7 @@ public class SolicitaionSearch {
 //            searchBox.sendKeys("1-2");
 
             test.log(LogStatus.PASS, "Searching Specific Solicitation");
-            WebElement docResult = driver.findElement(By.xpath("(//b[normalize-space()='9054'])[1]"));
+            WebElement docResult = driver.findElement(By.xpath("(//span[@class='text-primary'])[1]"));
             docResult.click();
 
             test.log(LogStatus.PASS, "Checking Search Results against URL");

@@ -4,13 +4,12 @@ import com.relevantcodes.extentreports.ExtentReports;
 import com.relevantcodes.extentreports.ExtentTest;
 import com.relevantcodes.extentreports.LogStatus;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.*;
 
 import java.io.IOException;
 
 import static ExtentRepoetListners.ExtentReportListener.report;
-import static UtilMethods.getScreenShot.capture;
+
 
 public class BaseClassForExtentReportLogger
 {

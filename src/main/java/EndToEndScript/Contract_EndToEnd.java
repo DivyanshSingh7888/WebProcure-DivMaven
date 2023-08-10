@@ -33,13 +33,13 @@ public class Contract_EndToEnd {
         test.log(LogStatus.PASS, "Logged In");
     }
 
-    @Test(description = "Creating Contract",priority = 1)
+    @Test(description = "Creating Contract")
     public void CreateContract() throws IOException, InterruptedException {
         test.log(LogStatus.PASS, "Creating Contract");
         CreateContract.createContract(test, driver);
     }
 
-    @Test(description = "Searching created Contract",priority = 2)
+    @Test(description = "Searching created Contract", dependsOnMethods = "CreateContract")
     public void SearchContract() throws IOException, InterruptedException {
         test.log(LogStatus.PASS, "Searching Contract");
         SearchContract.searchContract(test, driver);

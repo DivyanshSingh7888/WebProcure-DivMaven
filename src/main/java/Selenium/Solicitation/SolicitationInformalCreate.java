@@ -11,6 +11,7 @@ import org.testng.annotations.*;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Objects;
 
 import static ExtentRepoetListners.ExtentReportListener.report;
 import static UtilMethods.getScreenShot.capture;
@@ -23,12 +24,13 @@ public class SolicitationInformalCreate {
     public static void startTest()
     {
         report = new ExtentReports(System.getProperty("user.dir")+"\\ExtentReportResults.html");
-        test = report.startTest("SolicitaionInformalCreate");
+        test = report.startTest("Solicitation Informal Create");
         test.log(LogStatus.PASS, ">>>Start>>>>");
     }
 
     @BeforeMethod
-    public void setUp() throws FileNotFoundException, InterruptedException {
+    public void setUp() throws FileNotFoundException, InterruptedException
+    {
 
         driver = DriverUtil.getDriver();
         test.log(LogStatus.PASS, ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
@@ -36,28 +38,28 @@ public class SolicitationInformalCreate {
     }
 
     @Test
-    public void solicitationInFormalCreate() throws IOException {
-        solicitationInFormalCreate(this.test, this.driver);
+    public void solicitaionInFormalCreate() throws IOException, InterruptedException
+    {
+        solicitaionInFormalCreate(test, driver);
     }
 
-    private void solicitationInFormalCreate(ExtentTest test, WebDriver driver) {
-    }
-
-    @Test
-    public static void solicitaionInFormalCreate(ExtentTest test, WebDriver driver) throws InterruptedException, IOException {try {
+    public static void solicitaionInFormalCreate(ExtentTest test, WebDriver driver) throws InterruptedException, IOException
+    {
+        try
+        {
 
         test.log(LogStatus.PASS, "Clicking on Solicitation Drop Down");
         WebElement solicitaionDropDown = driver.findElement(By.xpath("//a[@title='Solicitations']"));
         solicitaionDropDown.click();
 
         test.log(LogStatus.PASS, "Clicking on create link");
-        WebElement create = driver.findElement(By.xpath("//a[text()='Create']"));
+        WebElement create = driver.findElement(By.xpath("//a[@title='Create Informal Solicitation']"));
         create.click();
 
         test.log(LogStatus.PASS, "Giving title name");
         WebElement title = driver.findElement(By.name("bid_title"));
         title.clear();
-        title.sendKeys("Test Div 6");
+        title.sendKeys("Automation");
 
         test.log(LogStatus.PASS, "Adding Solicitation Type- ITBOption");
         WebElement solicitationType = driver.findElement(By.xpath("(//select[@id='solType'])[1]"));
@@ -77,12 +79,6 @@ public class SolicitationInformalCreate {
         WebElement whoCanRespondBidEveryOne = driver.findElement(By.xpath("//option[normalize-space()='All Vendors']"));
         whoCanRespondBidEveryOne.click();
 
-        test.log(LogStatus.PASS, "Clicking on twoStep-Evaluation");
-        WebElement evaluationTipe = driver.findElement(By.xpath("//select[@id='twoStepEvaluation']"));
-        evaluationTipe.click();
-        WebElement twoStepEvaluation = driver.findElement(By.xpath("//option[normalize-space()='Two Envelope']"));
-        twoStepEvaluation.click();
-
         test.log(LogStatus.PASS, "Clicking on solicitation-Contact-Sukreet Sinha");
         WebElement solicitationContact  = driver.findElement(By.name("bid_contact"));
         solicitationContact.sendKeys("Sukreet Sinha");
@@ -92,9 +88,6 @@ public class SolicitationInformalCreate {
         WebElement startDate = driver.findElement(By.xpath("(//input[@id='solstartdatetime'])[1]"));
         startDate.clear();
         startDate.sendKeys(CurrentDateTimeAndRandomNumber.getCurrentTime());
-
-//        WebElement endDate = driver.findElement(By.xpath("(//input[@id='solenddatetime'])[1]"));
-//        endDate.sendKeys(CurrentDateTimeAndRandomNumber.formattedDateTime);
 
         test.log(LogStatus.PASS, "Clicking on Header-NextButton");
         Thread.sleep(1000);
@@ -187,7 +180,7 @@ public class SolicitationInformalCreate {
         String ActualUrl = driver.getCurrentUrl();
         String ExpectedUrl = ("https://webprocure-stage.proactiscloud.com/BidList/city/perfect?bt=2");
 
-        if (ActualUrl != ExpectedUrl){
+        if (!Objects.equals(ActualUrl, ExpectedUrl)){
             System.out.println("In-Formal Solicitaion Created,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,");
             test.log(LogStatus.PASS, "In-Formal Solicitaion Created");
         }
@@ -195,10 +188,11 @@ public class SolicitationInformalCreate {
             System.out.println("In-Formal Solicitaion Not Created,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,");
         }
 
-        Thread.sleep(2000);
+        Thread.sleep(1000);
         test.log(LogStatus.PASS, "Clicking on Close-Button");
         WebElement closeButton = driver.findElement(By.xpath("//*[@id=\"sol-requirement-content\"]/div/div/div[2]/button"));
         closeButton.click();
+
         test.log(LogStatus.PASS,test.addScreenCapture(capture(driver))+ "Test Passed- Please refer to the ScreenShot...!!");
 
         } catch (InterruptedException e) {
@@ -221,5 +215,5 @@ public class SolicitationInformalCreate {
         report.endTest(test);
         report.flush();
     }
-    }
+}
 

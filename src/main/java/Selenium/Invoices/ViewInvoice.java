@@ -18,7 +18,8 @@ import java.util.concurrent.TimeUnit;
 import static ExtentRepoetListners.ExtentReportListener.report;
 import static UtilMethods.getScreenShot.capture;
 
-public class ViewInvoice extends DriverUtil{
+public class ViewInvoice
+{
     WebDriver driver;
     static ExtentTest test;
 
@@ -31,7 +32,8 @@ public class ViewInvoice extends DriverUtil{
     }
 
     @BeforeMethod
-    public void setUp() {
+    public void setUp()
+    {
 
         driver = DriverUtil.getDriver();
         test.log(LogStatus.PASS, "Logged In");
@@ -39,10 +41,9 @@ public class ViewInvoice extends DriverUtil{
 
     @Test
     public void viewInvoice() throws IOException, InterruptedException {
-        viewInvoice(this.test, this.driver);
+        viewInvoice(test, this.driver);
     }
 
-    @Test
     public static void viewInvoice(ExtentTest test, WebDriver driver) throws InterruptedException, IOException {try {
 
         test.log(LogStatus.PASS, "Clicking on  Invoice Drop Down");
@@ -53,17 +54,17 @@ public class ViewInvoice extends DriverUtil{
         WebElement invoiceviewAll = driver.findElement(By.xpath("(//a[@href='/POListing/city/perfect'])[1]"));
         invoiceviewAll.click();
 
-        test.log(LogStatus.PASS, "Entering Buyer's Number");
-        WebElement buyerNumber = driver.findElement(By.xpath("(//input[@id='binvoicenum'])[1]"));
-        buyerNumber.sendKeys("IPCX2401783");
+//        test.log(LogStatus.PASS, "Entering Buyer's Number");
+//        WebElement buyerNumber = driver.findElement(By.xpath("(//input[@id='binvoicenum'])[1]"));
+//        buyerNumber.sendKeys("IPCX2401783");
 
-        test.log(LogStatus.PASS, "Clicking on Apply Button");
-        Thread.sleep(2000);
-        WebElement applyFilter = driver.findElement(By.xpath("(//button[normalize-space()='Apply Filter'])[1]"));
-        applyFilter.click();
+//        test.log(LogStatus.PASS, "Clicking on Apply Button");
+//        Thread.sleep(2000);
+//        WebElement applyFilter = driver.findElement(By.xpath("(//button[normalize-space()='Apply Filter'])[1]"));
+//        applyFilter.click();
 
         test.log(LogStatus.PASS, "Clicking on Organization Drop Down");
-        WebElement orgDropDown = driver.findElement(By.xpath("(//img[@id='arrow_1431'])[1]"));
+        WebElement orgDropDown = driver.findElement(By.xpath("(//img[@id='arrow_1450'])[1]"));
         orgDropDown.click();
 
         test.log(LogStatus.PASS, "Scrolling Page using Java Script");
@@ -71,7 +72,7 @@ public class ViewInvoice extends DriverUtil{
         JavascriptExecutor js5 = (JavascriptExecutor) driver;
         js5.executeScript("window.scrollBy(0,500)", "");
 
-        if (driver.findElement(By.xpath("(//table[@id='itemtable_1431'])[1]")).isDisplayed()){
+        if (driver.findElement(By.xpath("(//td)[11]")).isDisplayed()){
             test.log(LogStatus.PASS, "Invoice Viewed");
             test.log(LogStatus.PASS,test.addScreenCapture(capture(driver))+ "Test Passed");
             System.out.println(",,,,,,,,,,Test is Passed,,,,,,,,,,");
@@ -80,17 +81,15 @@ public class ViewInvoice extends DriverUtil{
             System.out.println(",,,,,,,,,,Test is Failed,,,,,,,,,,");
             test.log(LogStatus.FAIL, "Invoice Not Viewed");
             test.log(LogStatus.FAIL,test.addScreenCapture(capture(driver))+ "Test Failed");
-        }} catch (InterruptedException e) {
+        }} catch (InterruptedException | IOException e) {
         throw new RuntimeException(e);
-    } catch (IOException e) {
-        throw new RuntimeException(e);
-    }finally {
+    } finally {
         test.log(LogStatus.INFO, test.addScreenCapture(capture(driver)) + "For clarifications - Please refer to the ScreenShot...!!");
     }}
 
     @AfterMethod
     public void tearDown() {
-        driver.quit();
+        //driver.quit();
     }
 
     @AfterClass

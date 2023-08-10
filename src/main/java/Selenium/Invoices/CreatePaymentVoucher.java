@@ -5,18 +5,17 @@ import UtilMethods.DriverUtil;
 import com.relevantcodes.extentreports.ExtentReports;
 import com.relevantcodes.extentreports.ExtentTest;
 import com.relevantcodes.extentreports.LogStatus;
+import org.jetbrains.annotations.NotNull;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Objects;
 import java.util.concurrent.ThreadLocalRandom;
 
 import static ExtentRepoetListners.ExtentReportListener.report;
@@ -39,16 +38,15 @@ public class CreatePaymentVoucher {
     public void setUp() throws FileNotFoundException, InterruptedException {
 
         driver = DriverUtil.getDriver();
-        test.log(LogStatus.PASS, ">>>Started>>>>");
+        test.log(LogStatus.PASS, ">>Logged In>>");
     }
 
     @Test
     public void createPaymentVoucher() throws IOException, InterruptedException {
-        createPaymentVoucher(this.test, this.driver);
+        createPaymentVoucher(test, this.driver);
     }
 
-    @Test
-    public static void createPaymentVoucher(ExtentTest test, WebDriver driver) throws IOException {try {
+    public static void createPaymentVoucher(@NotNull ExtentTest test, @NotNull WebDriver driver) throws IOException {try {
 
         test.log(LogStatus.PASS, "Clicking on Invoice Drop Down");
         WebElement invoiceDropDown = driver.findElement(By.xpath("//a[@title='Invoice']"));
@@ -184,7 +182,8 @@ public class CreatePaymentVoucher {
         String actualUrl = driver.getCurrentUrl();
         String expectedUrl = ("https://webprocure-stage.proactiscloud.com/POListing//city/perfect");
 
-        if (actualUrl != expectedUrl) {
+        if (!Objects.equals(actualUrl, expectedUrl))
+        {
             System.out.println(",,,,,,,,,,,,,,,,,,Test is Passed,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,");
             test.log(LogStatus.PASS, "Payment Voucher Craeted");
             test.log(LogStatus.PASS,test.addScreenCapture(capture(driver))+ "Test Passed");
@@ -193,16 +192,21 @@ public class CreatePaymentVoucher {
             test.log(LogStatus.FAIL, "Payment Voucher Not Craeted");
             test.log(LogStatus.FAIL,test.addScreenCapture(capture(driver))+ "Test Failed");
         }
-    } catch (InterruptedException e) {
+    } catch (InterruptedException | IOException e) {
         throw new RuntimeException(e);
-    } catch (IOException e) {
-        throw new RuntimeException(e);
-    }finally {
+    } finally {
         test.log(LogStatus.INFO, test.addScreenCapture(capture(driver)) + "For clarifications - Please refer to the ScreenShot...!!");
     }}
 
-    @AfterClass
+    @AfterMethod
     public void tearDown() {
 //        driver.quit();
+    }
+
+    @AfterClass
+    public static void endTest()
+    {
+        report.endTest(test);
+        report.flush();
     }
 }

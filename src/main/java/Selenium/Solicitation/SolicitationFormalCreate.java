@@ -41,13 +41,15 @@ public class SolicitationFormalCreate {
     }
 
     @Test
-    public void solicitationFormalCreate() throws IOException {
+    public void solicitationFormalCreate() throws IOException
+    {
         solicitationFormalCreate(this.test, this.driver);
     }
 
-    @Test
-    public void solicitationFormalCreate(ExtentTest test, WebDriver driver) throws IOException {
-        try {
+    public void solicitationFormalCreate(ExtentTest test, WebDriver driver) throws IOException
+    {
+        try
+        {
 
             test.log(LogStatus.PASS, "Clicking on Solicitation Drop Down");
             WebElement solicitaionDropDown = driver.findElement(By.xpath("//a[normalize-space()='Solicitations']"));
@@ -60,7 +62,7 @@ public class SolicitationFormalCreate {
             test.log(LogStatus.PASS, "Giving title name");
             WebElement title = driver.findElement(By.name("bid_title"));
             title.clear();
-            title.sendKeys("Test Div 5");
+            title.sendKeys("Automation");
 
             test.log(LogStatus.PASS, "Adding Solicitation Type- ITBOption");
             WebElement solicitationType = driver.findElement(By.xpath("(//select[@id='solType'])[1]"));
@@ -86,7 +88,7 @@ public class SolicitationFormalCreate {
             WebElement twoStepEvaluation = driver.findElement(By.xpath("//option[normalize-space()='Two Envelope']"));
             twoStepEvaluation.click();
 
-            test.log(LogStatus.PASS, "Clicking on solicitationContact-Sukreet Sinha");
+            test.log(LogStatus.PASS, "Clicking on solicitation Contact-Sukreet Sinha");
             WebElement solicitationContact = driver.findElement(By.name("bid_contact"));
             solicitationContact.sendKeys("Sukreet Sinha");
             solicitationContact.findElement(By.xpath("//*[@id=\"ui-id-2\"]")).click();
