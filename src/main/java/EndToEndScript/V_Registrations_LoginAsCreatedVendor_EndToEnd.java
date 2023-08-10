@@ -221,7 +221,8 @@ public class V_Registrations_LoginAsCreatedVendor_EndToEnd
                 test.log(LogStatus.PASS, "Accepting Vendor Profile Verification");
                 WebElement vendorProfileVerification = driver.findElement(By.xpath("/html/body/div[3]/div[2]/div/div[2]/form/div/div[15]/div/button[2]"));
                 vendorProfileVerification.click();
-            } catch (Exception e) {
+            } catch (Exception e)
+            {
                 System.out.println("Pop-up is not there..!");
                 throw new RuntimeException(e);
             }
